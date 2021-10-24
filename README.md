@@ -1,24 +1,61 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# テーブル設計
 
-Things you may want to cover:
+## users テーブル
 
-* Ruby version
+| Column                    | Type   | Option                    |
+| ------------------------- | ------ | ------------------------- |
+| nickname                  | string | null: false               |
+| email                     | string | null: false, unique: true |
+| encrypted_password        | string | null: false               |
 
-* System dependencies
+### Association
 
-* Configuration
+- has_many :comments
+- has_many :insects
+- has_many :fishes
 
-* Database creation
+## comments テーブル
+ 
+| Column | Type       | Option                         |
+| ------ | ---------- | ------------------------------ |
+| text   | text       | null: false                    |
+| user   | references | null: false, foreign_key: true |
+| fish   | references | null: false, foreign_key: true |
+| insect | references | null: false, foreign_key: true |
 
-* Database initialization
 
-* How to run the test suite
+### Association
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :user
+- belongs_to :insect
+- belongs_to :fish
 
-* Deployment instructions
+## insects テーブル
 
-* ...
+| Column           | Type       | Option                         |
+| ---------------- | ---------- | ------------------------------ |
+| season           | string     | null: false                    |
+| time_zone        | string     | null: false                    |
+| appearance_place | string     | null: false                    |
+| user             | references | null: false, foreign_key: true | 
+
+### Association
+
+- belongs_to :user
+- has_one :comment
+
+## fishes テーブル
+
+| Column           | Type       | Option                         |
+| ---------------- | ---------- | ------------------------------ |
+| season           | string     | null: false                    |
+| time_zone        | string     | null: false                    |
+| appearance_place | string     | null: false                    |
+| user             | references | null: false, foreign_key: true | 
+
+### Association
+
+- belongs_to :user
+- has_one :comment
