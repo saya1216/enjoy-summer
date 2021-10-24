@@ -13,7 +13,6 @@
 ActiveRecord::Schema.define(version: 2021_10_24_063549) do
 
   create_table "fish", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "season", null: false
     t.string "time_zone", null: false
     t.string "appearance_place", null: false
     t.text "image", null: false
@@ -22,7 +21,6 @@ ActiveRecord::Schema.define(version: 2021_10_24_063549) do
   end
 
   create_table "insects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "season", null: false
     t.string "time_zone", null: false
     t.string "appearance_place", null: false
     t.text "image", null: false
