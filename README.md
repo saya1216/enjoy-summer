@@ -3,7 +3,6 @@
 # テーブル設計
 
 ## users テーブル
-
 | Column                    | Type   | Option                    |
 | ------------------------- | ------ | ------------------------- |
 | nickname                  | string | null: false               |
@@ -11,51 +10,78 @@
 | encrypted_password        | string | null: false               |
 
 ### Association
+- has_many :i_comments
+- has_many :f_comments
+- has_many :insects, through: :insect_users
+- has_many :fish, through: :fish_users
 
-- has_many :comments
-- has_many :insects
-- has_many :fishes
 
-## comments テーブル
- 
+## i_comments テーブル 
+| Column | Type       | Option                         |
+| ------ | ---------- | ------------------------------ |
+| text   | text       | null: false                    |
+| user   | references | null: false, foreign_key: true |
+| insect | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :user
+- belongs_to :insect
+
+
+## f_comments テーブル 
 | Column | Type       | Option                         |
 | ------ | ---------- | ------------------------------ |
 | text   | text       | null: false                    |
 | user   | references | null: false, foreign_key: true |
 | fish   | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :user
+- belongs_to :fish
+
+
+## insect_users テーブル 
+| Column | Type       | Option                         |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
 | insect | references | null: false, foreign_key: true |
 
 
 ### Association
-
 - belongs_to :user
 - belongs_to :insect
+
+
+## fish_users テーブル
+| Column | Type       | Option                         |
+| ------ | ---------- | ------------------------------ |
+| user   | references | null: false, foreign_key: true |
+| fish   | references | null: false, foreign_key: true |
+
+### Association
+- belongs_to :user
 - belongs_to :fish
 
+
 ## insects テーブル
-
-| Column           | Type       | Option                         |
-| ---------------- | ---------- | ------------------------------ |
-| season           | string     | null: false                    |
-| time_zone        | string     | null: false                    |
-| appearance_place | string     | null: false                    |
-| user             | references | null: false, foreign_key: true | 
+| Column           | Type       | Option      |
+| ---------------- | ---------- | ----------- |
+| time_zone        | string     | null: false |
+| appearance_place | string     | null: false |
+| image            | text       | null: false | 
 
 ### Association
+- has_many :users, through: :insect_users
+- has_many :i_comments
 
-- belongs_to :user
-- has_one :comment
 
-## fishes テーブル
-
-| Column           | Type       | Option                         |
-| ---------------- | ---------- | ------------------------------ |
-| season           | string     | null: false                    |
-| time_zone        | string     | null: false                    |
-| appearance_place | string     | null: false                    |
-| user             | references | null: false, foreign_key: true | 
+## fish テーブル
+| Column           | Type       | Option      |
+| ---------------- | ---------- | ----------- |
+| time_zone        | string     | null: false |
+| appearance_place | string     | null: false |
+| image            | text       | null: false | 
 
 ### Association
-
-- belongs_to :user
-- has_one :comment
+- has_many :users, through: :fish_users
+- has_many :f_comments
